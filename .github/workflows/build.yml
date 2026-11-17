@@ -12,40 +12,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - name: Build with Buildozer
+      uses: ArtemSBulgakov/buildozer-action@v1
+      id: buildozer
       with:
-        python-version: '3.10'
-
-    - name: Install system dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          git \
-          zip \
-          unzip \
-          openjdk-17-jdk \
-          autoconf \
-          libtool \
-          pkg-config \
-          zlib1g-dev \
-          libncurses5-dev \
-          libncursesw5-dev \
-          cmake \
-          libffi-dev \
-          libssl-dev
-
-    - name: Install Buildozer and Cython
-      run: |
-        pip install --upgrade pip
-        pip install --upgrade cython==0.29.36 buildozer
-
-    - name: Build APK with Buildozer
-      run: |
-        buildozer -v android debug
-      env:
-        # Permet à Buildozer d'accepter automatiquement les licences du SDK Android
-        BUILDER_ACCEPT_LICENCES: "1"
+        command: android debug
+        buildozer_version: master
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
