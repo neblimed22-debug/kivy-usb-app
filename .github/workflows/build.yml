@@ -43,6 +43,9 @@ jobs:
     - name: Build APK with Buildozer
       run: |
         buildozer -v android debug
+      env:
+        # Permet à Buildozer d'accepter automatiquement les licences du SDK Android
+        BUILDER_ACCEPT_LICENCES: "1"
 
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
